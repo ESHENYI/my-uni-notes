@@ -35,40 +35,25 @@
   </div>
 
   <script>
-    // ---- Update this list with the EXACT filenames in your repo's /files folder ----
-    const pdfFiles = [
-      "civl6415 notes (1).pdf",   // example with spaces/parentheses
-      "CIVL6415-Week2.pdf",
-      "Extra-Reading.pdf"
-    ];
+  const pdfFiles = [
+    "civl6415 notes (1).pdf",
+    "CIVL6415-Week2.pdf",
+    "Extra-Reading.pdf",
+    "new-file.pdf"           // ← add more here
+  ];
 
-    // Format link text nicely from filename
-    function prettyTitle(name) {
-      return name
-        .replace(/\.pdf$/i, "")
-        .replace(/[-_]+/g, " ")
-        .replace(/\s+/g, " ")
-        .trim();
-    }
+  const list = document.getElementById("pdf-list");
+  list.innerHTML = "";
+  pdfFiles.forEach(file => {
+    const li = document.createElement("li");
+    const a = document.createElement("a");
+    a.href = `files/${encodeURIComponent(file)}`;
+    a.target = "_blank";
+    a.textContent = file.replace(/\.pdf$/i, "").replace(/[-_]+/g, " ");
+    li.appendChild(a);
+    list.appendChild(li);
+  });
+</script>
 
-    const list = document.getElementById("pdf-list");
-    list.innerHTML = ""; // clear "Loading…"
-
-    if (!pdfFiles.length) {
-      list.innerHTML = "<li>No PDFs yet. Add files to the <code>files/</code> folder.</li>";
-    } else {
-      pdfFiles.forEach(file => {
-        const li = document.createElement("li");
-        const a = document.createElement("a");
-        // Use encodeURIComponent so spaces/() etc. don't 404 on GitHub Pages
-        a.href = `files/${encodeURIComponent(file)}`;
-        a.target = "_blank";
-        a.rel = "noopener";
-        a.textContent = prettyTitle(file);
-        li.appendChild(a);
-        list.appendChild(li);
-      });
-    }
-  </script>
 </body>
 </html>
