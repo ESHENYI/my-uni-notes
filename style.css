@@ -52,22 +52,14 @@ body.dark .sidebar a:hover {
   background: rgba(255, 255, 255, 0.1); /* subtle highlight */
 }
 
-/* Light mode links */
-a {
-  text-decoration: none;
-  color: darkblue;
+/* Dark mode links in content area */
+body.dark .content a,
+body.dark .content a:link,
+body.dark .content a:visited {
+  color: #4da3ff !important; /* bright light blue */
 }
 
-a:hover {
-  text-decoration: underline;
+body.dark .content a:hover,
+body.dark .content a:focus {
+  color: #80c0ff !important; /* lighter on hover */
 }
-
-/* Dark mode links */
-body.dark a {
-  color: #4da3ff; /* bright light blue */
-}
-
-body.dark a:hover {
-  color: #80c0ff; /* lighter on hover */
-}
-
