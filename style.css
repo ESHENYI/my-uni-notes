@@ -25,3 +25,14 @@ a {
 a:hover {
   text-decoration: underline;
 }
+
+/* Brighten headings in dark mode */
+body.dark h1, 
+body.dark h2 {
+  color: #ffffff; /* pure white for maximum contrast */
+}
+
+/* Optional: brighten intro paragraph too */
+body.dark #intro {
+  color: #dddddd; /* softer white so it's not too glaring */
+}
