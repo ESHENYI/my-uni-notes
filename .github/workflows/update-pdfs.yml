@@ -4,14 +4,14 @@ on:
   push:
     branches: [ main ]
     paths:
-      - 'files/**'                       # when PDFs change
-      - 'update_pdfs.py'                 # or the script changes
+      - 'files/**'                         # run when PDFs change
+      - 'update_pdfs.py'                   # or the script changes
       - '.github/workflows/update-pdfs.yml'
   schedule:
-    - cron: '23 03 * * *'               # daily at 03:23 UTC (change as you like)
-  workflow_dispatch:                     # allow manual run from Actions tab
+    - cron: '23 03 * * *'                  # daily at 03:23 UTC (adjust as you like)
+  workflow_dispatch:                        # allow manual run from Actions tab
 
-# Give this workflow write access to push the updated json
+# Allow the workflow to push back to the repo
 permissions:
   contents: write
 
@@ -41,6 +41,8 @@ jobs:
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git fetch origin main
+          git pull origin main --rebase
           git add pdfs.json
-          git commit -m "Auto-update pdfs.json [skip ci]"
-          git push
+          git commit -m "Auto-update pdfs.json [skip ci]" || echo "Nothing to commit"
+          git push origin main
