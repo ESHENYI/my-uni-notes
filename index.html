@@ -13,28 +13,103 @@
       --bg: #121212; --text: #f0f0f0; --link: #80b3ff; --sidebar-bg: #1e1e1e; --border: #333;
       --muted: #aaa;
     }
-    body { margin: 0; font-family: Arial, sans-serif; background: var(--bg); color: var(--text); transition: background .25s, color .25s; }
-    .sidebar { width: 240px; height: 100vh; background: var(--sidebar-bg); padding: 16px; float: left; border-right: 1px solid var(--border); box-sizing: border-box; position: sticky; top: 0; }
-    .sidebar h2 { margin: 0 0 10px; font-size: 18px; }
-    .sidebar ul { list-style: none; margin: 0; padding: 0; }
-    .sidebar li { margin-bottom: 8px; }
-    .sidebar a { text-decoration: none; color: var(--text); display: block; padding: 6px 8px; border-radius: 6px; }
-    .sidebar a:hover { background: rgba(0,0,0,0.06); }
-    body.dark .sidebar a:hover { background: rgba(255,255,255,0.08); }
-    .sidebar a.active { outline: 2px solid var(--border); }
-    .toggle-wrap { margin-top: 16px; }
-    .content { margin-left: 240px; padding: 20px; box-sizing: border-box; }
-    h1 { margin-top: 0; }
-    #intro { color: var(--muted); margin-bottom: 14px; }
-    #search { width: 100%; padding: 8px; border: 1px solid var(--border); border-radius: 6px; background: var(--bg); color: var(--text); }
-    .group { margin-top: 18px; }
-    .group h2 { margin: 16px 0 8px; font-size: 20px; }
-    .group ul { margin: 0; padding-left: 18px; }
-    .empty { color: var(--muted); margin-top: 8px; }
-    .btn { padding: 8px 10px; border: 1px solid var(--border); background: transparent; color: var(--text); border-radius: 6px; cursor: pointer; }
-
-    /* Optional: styling for the dynamic course title */
-    #course-title { margin: 16px 0 8px; font-size: 22px; }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      transition: background .25s, color .25s;
+    }
+    .sidebar {
+      width: 240px;
+      height: 100vh;
+      background: var(--sidebar-bg);
+      padding: 16px;
+      float: left;
+      border-right: 1px solid var(--border);
+      box-sizing: border-box;
+      position: sticky;
+      top: 0;
+    }
+    .sidebar h2 {
+      margin: 0 0 10px;
+      font-size: 18px;
+    }
+    .sidebar ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    .sidebar li {
+      margin-bottom: 8px;
+    }
+    .sidebar a {
+      text-decoration: none;
+      color: var(--text);
+      display: block;
+      padding: 6px 8px;
+      border-radius: 6px;
+    }
+    .sidebar a:hover {
+      background: rgba(0,0,0,0.06);
+    }
+    body.dark .sidebar a:hover {
+      background: rgba(255,255,255,0.08);
+    }
+    .sidebar a.active {
+      outline: 2px solid var(--border);
+    }
+    .toggle-wrap {
+      margin-top: 16px;
+    }
+    .content {
+      margin-left: 240px;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+    h1 {
+      margin-top: 0;
+    }
+    #intro {
+      color: var(--muted);
+      margin-bottom: 14px;
+    }
+    #search {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--bg);
+      color: var(--text);
+    }
+    .group {
+      margin-top: 18px;
+    }
+    .group h2 {
+      margin: 16px 0 8px;
+      font-size: 20px;
+    }
+    .group ul {
+      margin: 0;
+      padding-left: 18px;
+    }
+    .empty {
+      color: var(--muted);
+      margin-top: 8px;
+    }
+    .btn {
+      padding: 8px 10px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text);
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    /* Dynamic course title */
+    #course-title {
+      margin: 16px 0 8px;
+      font-size: 22px;
+    }
   </style>
 </head>
 <body class="light">
@@ -55,7 +130,7 @@
     <h1>Welcome to My Uni Notes</h1>
     <p id="intro">Semester 2, 2025 notes. Use the sidebar to switch subjects, search below to filter PDFs.</p>
 
-    <!-- Dynamic course title goes here (shown only when a single subject is selected) -->
+    <!-- Course title placeholder -->
     <h2 id="course-title" style="display:none;"></h2>
 
     <input type="text" id="search" placeholder="Search notes... (filters filenames)">
@@ -65,9 +140,9 @@
   <script>
     // ---- CONFIG ----
     const PJSON_URL = "pdfs.json";
-    const SUBJECTS = ["CIVL6415", "MATH3301", "MATH3405"]; // must match folder names under /files/
+    const SUBJECTS = ["CIVL6415", "MATH3301", "MATH3405"];
 
-    // Custom titles for each subject
+    // Custom titles
     const SUBJECT_TITLES = {
       "CIVL6415": "CIVL6415 COURSE NAME",
       "MATH3301": "MATH3301 COURSE NAME",
@@ -81,12 +156,12 @@
 
     // ---- DOM ----
     const pdfContainer = document.getElementById("pdfs");
-    const searchInput   = document.getElementById("search");
-    const subjectList   = document.getElementById("subject-list");
-    const toggleBtn     = document.getElementById("toggle-dark");
+    const searchInput = document.getElementById("search");
+    const subjectList = document.getElementById("subject-list");
+    const toggleBtn = document.getElementById("toggle-dark");
     const courseTitleEl = document.getElementById("course-title");
 
-    // Load theme preference
+    // Load saved theme
     const savedTheme = localStorage.getItem("theme");
     if (savedTheme === "dark") {
       document.body.classList.remove("light");
@@ -96,14 +171,14 @@
       document.body.classList.add("light");
     }
 
-    // Toggle dark mode
+    // Dark mode toggle
     toggleBtn.addEventListener("click", () => {
       document.body.classList.toggle("dark");
       document.body.classList.toggle("light");
       localStorage.setItem("theme", document.body.classList.contains("dark") ? "dark" : "light");
     });
 
-    // Sidebar click handling
+    // Sidebar subject clicks
     subjectList.addEventListener("click", (e) => {
       const link = e.target.closest("a[data-subject]");
       if (!link) return;
@@ -114,25 +189,28 @@
       render();
     });
 
-    // Search bar filtering
+    // Search input
     searchInput.addEventListener("input", () => {
       query = searchInput.value.trim().toLowerCase();
       render();
     });
 
-    // Load data
+    // Fetch JSON
     fetch(PJSON_URL)
       .then(r => r.json())
-      .then(json => { data = json; render(); })
+      .then(json => {
+        data = json;
+        render();
+      })
       .catch(() => {
         pdfContainer.innerHTML = `<p class="empty">Couldn’t load <code>${PJSON_URL}</code>. Make sure it’s in the repo root.</p>`;
       });
 
-    // Render function
+    // Render
     function render() {
       pdfContainer.innerHTML = "";
 
-      // Update the dynamic course title
+      // Show/hide title
       if (currentSubject !== "ALL") {
         courseTitleEl.textContent = SUBJECT_TITLES[currentSubject] || currentSubject;
         courseTitleEl.style.display = "block";
@@ -152,10 +230,10 @@
           const nameNoExt = file.replace(/\.pdf$/i, "");
           if (!query || nameNoExt.toLowerCase().includes(query)) {
             const li = document.createElement("li");
-            const a  = document.createElement("a");
-            a.href   = `files/${encodeURIComponent(subject)}/${encodeURIComponent(file)}`;
+            const a = document.createElement("a");
+            a.href = `files/${encodeURIComponent(subject)}/${encodeURIComponent(file)}`;
             a.target = "_blank";
-            a.rel    = "noopener";
+            a.rel = "noopener";
             a.textContent = nameNoExt;
             li.appendChild(a);
             list.appendChild(li);
@@ -166,7 +244,6 @@
         if (list.children.length > 0) {
           const wrap = document.createElement("div");
           wrap.className = "group";
-          // Only show group heading in "ALL" mode
           if (currentSubject === "ALL") {
             const h2 = document.createElement("h2");
             h2.textContent = subject;
