@@ -5,85 +5,166 @@
   <title>My Uni Notes</title>
   <link rel="stylesheet" href="style.css">
   <style>
-    body { font-family: Arial, sans-serif; margin: 0; background: var(--bg); color: var(--text); transition: background 0.3s, color 0.3s; }
-    .sidebar { width: 220px; height: 100vh; background: var(--sidebar-bg); padding: 16px; float:left; border-right:1px solid var(--border); }
-    .content { margin-left: 240px; padding: 20px; }
-    h1 { margin-top:0; }
-    a { color: var(--link); text-decoration:none; }
-    a:hover { text-decoration:underline; }
-    #search { width: 100%; padding: 6px; margin-bottom: 10px; }
-    .dark { --bg: #121212; --text: #f0f0f0; --link: #80b3ff; --sidebar-bg: #1e1e1e; --border: #333; }
-    .light { --bg: #ffffff; --text: #000000; --link: blue; --sidebar-bg: #f3f3f3; --border: #ddd; }
+    /* Minimal styling (use/merge with your style.css as you like) */
+    :root {
+      --bg: #ffffff; --text: #000; --link: #0645ad; --sidebar-bg: #f3f3f3; --border: #ddd;
+      --muted: #666;
+    }
+    body.dark {
+      --bg: #121212; --text: #f0f0f0; --link: #80b3ff; --sidebar-bg: #1e1e1e; --border: #333;
+      --muted: #aaa;
+    }
+    body { margin: 0; font-family: Arial, sans-serif; background: var(--bg); color: var(--text); transition: background .25s, color .25s; }
+    .sidebar { width: 240px; height: 100vh; background: var(--sidebar-bg); padding: 16px; float: left; border-right: 1px solid var(--border); box-sizing: border-box; position: sticky; top: 0; }
+    .sidebar h2 { margin: 0 0 10px; font-size: 18px; }
+    .sidebar ul { list-style: none; margin: 0; padding: 0; }
+    .sidebar li { margin-bottom: 8px; }
+    .sidebar a { text-decoration: none; color: var(--text); display: block; padding: 6px 8px; border-radius: 6px; }
+    .sidebar a:hover { background: rgba(0,0,0,0.06); }
+    body.dark .sidebar a:hover { background: rgba(255,255,255,0.08); }
+    .sidebar a.active { outline: 2px solid var(--border); }
+    .toggle-wrap { margin-top: 16px; }
+    .content { margin-left: 240px; padding: 20px; box-sizing: border-box; }
+    h1 { margin-top: 0; }
+    #intro { color: var(--muted); margin-bottom: 14px; }
+    #search { width: 100%; padding: 8px; border: 1px solid var(--border); border-radius: 6px; background: var(--bg); color: var(--text); }
+    .group { margin-top: 18px; }
+    .group h2 { margin: 16px 0 8px; font-size: 20px; }
+    .group ul { margin: 0; padding-left: 18px; }
+    .empty { color: var(--muted); margin-top: 8px; }
+    .btn { padding: 8px 10px; border: 1px solid var(--border); background: transparent; color: var(--text); border-radius: 6px; cursor: pointer; }
   </style>
 </head>
 <body class="light">
   <div class="sidebar">
     <h2>Subjects</h2>
-    <ul>
-      <li><a href="#pdfs">All PDFs</a></li>
+    <ul id="subject-list">
+      <li><a href="#" data-subject="ALL" class="active">All PDFs</a></li>
+      <li><a href="#" data-subject="CIVL6415">CIVL6415</a></li>
+      <li><a href="#" data-subject="MATH3303">MATH3303</a></li>
+      <li><a href="#" data-subject="MATH3405">MATH3405</a></li>
     </ul>
-    <button id="toggle-dark">🌙 Toggle Dark Mode</button>
+    <div class="toggle-wrap">
+      <button id="toggle-dark" class="btn">🌙 Toggle Dark Mode</button>
+    </div>
   </div>
 
   <div class="content">
     <h1>Welcome to My Uni Notes</h1>
-    <input type="text" id="search" placeholder="Search notes...">
+    <p id="intro">Write anything you like here (plan for the week, reminders, links, etc.). Use the sidebar to switch subjects, search below to filter PDFs.</p>
 
-    <div id="pdfs"></div>
+    <input type="text" id="search" placeholder="Search notes... (filters filenames)">
+    <div id="pdfs" class="group"></div>
   </div>
 
   <script>
+    // ---- CONFIG ----
+    // The JSON file lists PDFs for each subject folder:
+    // {
+    //   "CIVL6415": ["week1.pdf", "week2.pdf"],
+    //   "MATH3303": ["algebra1.pdf"],
+    //   "MATH3405": ["stochastic-processes.pdf"]
+    // }
+    const PJSON_URL = "pdfs.json";
+    const SUBJECTS = ["CIVL6415", "MATH3303", "MATH3405"]; // must match your folder names under /files/
+
+    // ---- STATE ----
+    let data = {};                // { subject: [file.pdf, ...] }
+    let currentSubject = "ALL";   // "ALL" or one of SUBJECTS
+    let query = "";
+
+    // ---- DOM ----
     const pdfContainer = document.getElementById("pdfs");
     const searchInput = document.getElementById("search");
+    const subjectList = document.getElementById("subject-list");
+    const toggleBtn = document.getElementById("toggle-dark");
 
-    // Load JSON with grouped PDFs
-    fetch("pdfs.json")
-      .then(r => r.json())
-      .then(data => {
-        renderPDFs(data);
-
-        searchInput.addEventListener("input", () => {
-          const q = searchInput.value.toLowerCase();
-          renderPDFs(data, q);
-        });
-      });
-
-    function renderPDFs(groups, query="") {
-      pdfContainer.innerHTML = "";
-      for (const subject in groups) {
-        const files = groups[subject];
-        const subjectDiv = document.createElement("div");
-        const heading = document.createElement("h2");
-        heading.textContent = subject;
-        subjectDiv.appendChild(heading);
-
-        const list = document.createElement("ul");
-        files.forEach(file => {
-          const fileName = file.replace(/\.pdf$/i, "");
-          if (fileName.toLowerCase().includes(query)) {
-            const li = document.createElement("li");
-            const a = document.createElement("a");
-            a.href = `files/${encodeURIComponent(subject.toLowerCase())}/${encodeURIComponent(file)}`;
-            a.target = "_blank";
-            a.rel = "noopener";
-            a.textContent = fileName;
-            li.appendChild(a);
-            list.appendChild(li);
-          }
-        });
-        if (list.children.length > 0) {
-          subjectDiv.appendChild(list);
-          pdfContainer.appendChild(subjectDiv);
-        }
-      }
+    // Persist dark mode choice across visits
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme === "dark") {
+      document.body.classList.remove("light");
+      document.body.classList.add("dark");
+    } else {
+      document.body.classList.remove("dark");
+      document.body.classList.add("light");
     }
 
-    // Dark mode toggle
-    const toggleBtn = document.getElementById("toggle-dark");
     toggleBtn.addEventListener("click", () => {
       document.body.classList.toggle("dark");
       document.body.classList.toggle("light");
+      localStorage.setItem("theme", document.body.classList.contains("dark") ? "dark" : "light");
     });
+
+    // Sidebar subject clicks
+    subjectList.addEventListener("click", (e) => {
+      const link = e.target.closest("a[data-subject]");
+      if (!link) return;
+      e.preventDefault();
+      currentSubject = link.dataset.subject;
+      // set active class
+      [...subjectList.querySelectorAll("a")].forEach(a => a.classList.remove("active"));
+      link.classList.add("active");
+      render();
+    });
+
+    // Search
+    searchInput.addEventListener("input", () => {
+      query = searchInput.value.trim().toLowerCase();
+      render();
+    });
+
+    // Fetch JSON + render
+    fetch(PJSON_URL)
+      .then(r => r.json())
+      .then(json => {
+        data = json;
+        render();
+      })
+      .catch(() => {
+        pdfContainer.innerHTML = `<p class="empty">Couldn’t load <code>${PJSON_URL}</code>. Make sure it’s in the repo root.</p>`;
+      });
+
+    // Render according to currentSubject + query
+    function render() {
+      pdfContainer.innerHTML = "";
+      const toRender = currentSubject === "ALL" ? SUBJECTS : [currentSubject];
+
+      let totalShown = 0;
+      toRender.forEach(subject => {
+        const files = (data[subject] || []);
+        const list = document.createElement("ul");
+        files.forEach(file => {
+          const nameNoExt = file.replace(/\.pdf$/i, "");
+          if (!query || nameNoExt.toLowerCase().includes(query)) {
+            const li = document.createElement("li");
+            const a = document.createElement("a");
+            // Use subject as folder (exact case); file as exact filename
+            a.href = `files/${encodeURIComponent(subject)}/${encodeURIComponent(file)}`;
+            a.target = "_blank";
+            a.rel = "noopener";
+            a.textContent = nameNoExt;
+            li.appendChild(a);
+            list.appendChild(li);
+            totalShown++;
+          }
+        });
+
+        if (list.children.length > 0) {
+          const wrap = document.createElement("div");
+          wrap.className = "group";
+          const h2 = document.createElement("h2");
+          h2.textContent = subject;
+          // Only show group headings when viewing ALL; for a single subject, we can skip the heading
+          if (currentSubject === "ALL") wrap.appendChild(h2);
+          wrap.appendChild(list);
+          pdfContainer.appendChild(wrap);
+        }
+      });
+
+      if (totalShown === 0) {
+        pdfContainer.innerHTML = `<p class="empty">No PDFs match your filter${currentSubject === "ALL" ? "" : ` in <strong>${currentSubject}</strong>`}.</p>`;
+      }
+    }
   </script>
 </body>
 </html>
