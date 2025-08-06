@@ -87,3 +87,28 @@ body.dark .content a:focus {
 body.dark #pdfs li a:hover {
   background: rgba(77, 163, 255, 0.18);
 }
+
+/* ===== Mobile Responsive Fix ===== */
+@media (max-width: 768px) {
+  /* Sidebar takes full width */
+  .sidebar {
+    width: 100%;
+    height: auto;
+    position: relative;
+    float: none;
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* Content shifts under sidebar */
+  .content {
+    margin-left: 0;
+  }
+
+  /* Make sure lists and inputs fit */
+  #search {
+    width: 100%;
+    box-sizing: border-box;
+  }
+}
+
