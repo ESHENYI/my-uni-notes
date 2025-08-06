@@ -17,6 +17,7 @@ body {
   padding: 20px;
 }
 
+/* Default link styles (light mode) */
 a {
   text-decoration: none;
   color: darkblue;
@@ -29,37 +30,61 @@ a:hover {
 /* Brighten headings in dark mode */
 body.dark h1, 
 body.dark h2 {
-  color: #ffffff; /* pure white for maximum contrast */
+  color: #ffffff;
 }
 
 /* Brighten intro paragraph in dark mode */
 body.dark #intro {
-  color: #dddddd; /* softer white so it's not too glaring */
+  color: #dddddd;
 }
 
-/* Brighten sidebar text and background in dark mode */
+/* Sidebar dark mode styling */
 body.dark .sidebar {
-  background: #1e1e1e; /* darker background */
+  background: #1e1e1e;
   border-right: 1px solid #444;
 }
 
 body.dark .sidebar h2,
 body.dark .sidebar a {
-  color: #f0f0f0; /* light text for readability */
+  color: #f0f0f0;
 }
 
 body.dark .sidebar a:hover {
-  background: rgba(255, 255, 255, 0.1); /* subtle highlight */
+  background: rgba(255, 255, 255, 0.1);
 }
 
 /* Dark mode links in content area */
 body.dark .content a,
 body.dark .content a:link,
 body.dark .content a:visited {
-  color: #4da3ff !important; /* bright light blue */
+  color: #4da3ff !important;
 }
 
 body.dark .content a:hover,
 body.dark .content a:focus {
-  color: #80c0ff !important; /* lighter on hover */
+  color: #80c0ff !important;
+}
+
+/* --- PDF file list styles --- */
+.content ul li {
+  margin-bottom: 14px;         /* extra space between items */
+}
+
+.content ul li a {
+  font-size: 1.15em;           /* slightly larger text */
+  display: inline-block;
+  padding: 6px 8px;            /* bigger clickable area */
+  border-radius: 6px;          /* rounded hover background */
+  transition: background 0.2s, color 0.2s;
+}
+
+/* Light mode hover effect */
+.content ul li a:hover {
+  background: rgba(0, 0, 139, 0.1); /* light blue background */
+  text-decoration: none;
+}
+
+/* Dark mode hover effect */
+body.dark .content ul li a:hover {
+  background: rgba(77, 163, 255, 0.15); /* subtle light-blue glow */
 }
