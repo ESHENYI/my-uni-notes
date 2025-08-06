@@ -5,36 +5,30 @@ body {
 }
 
 .sidebar {
-  width: 200px;
+  width: 240px;
   height: 100vh;
   background: #f4f4f4;
-  padding: 20px;
+  padding: 16px;
   float: left;
-  border-right: 1px solid #ccc;
+  border-right: 1px solid var(--border, #ddd); /* fallback color */
+  box-sizing: border-box;
+  position: sticky;
+  top: 0;
 }
 
 .content {
-  margin-left: 220px;
+  margin-left: 240px;
   padding: 20px;
+  box-sizing: border-box;
 }
 
 /* ========== Links (light mode defaults) ========== */
-a {
-  text-decoration: none;
-  color: darkblue;
-}
-a:hover {
-  text-decoration: underline;
-}
+a { text-decoration: none; color: darkblue; }
+a:hover { text-decoration: underline; }
 
 /* ========== Dark mode readability ========== */
-body.dark h1,
-body.dark h2 {
-  color: #ffffff;                 /* bright headings */
-}
-body.dark #intro {
-  color: #dddddd;                 /* softer paragraph */
-}
+body.dark h1, body.dark h2 { color: #fff; }
+body.dark #intro { color: #ddd; }
 
 /* Sidebar in dark mode */
 body.dark .sidebar {
@@ -42,73 +36,49 @@ body.dark .sidebar {
   border-right: 1px solid #444;
 }
 body.dark .sidebar h2,
-body.dark .sidebar a {
-  color: #f0f0f0;
-}
-body.dark .sidebar a:hover {
-  background: rgba(255, 255, 255, 0.10);
-}
+body.dark .sidebar a { color: #f0f0f0; }
+body.dark .sidebar a:hover { background: rgba(255,255,255,.10); }
 
 /* Content links in dark mode (override) */
 body.dark .content a,
 body.dark .content a:link,
-body.dark .content a:visited {
-  color: #4da3ff !important;
-}
+body.dark .content a:visited { color: #4da3ff !important; }
 body.dark .content a:hover,
-body.dark .content a:focus {
-  color: #80c0ff !important;
-}
+body.dark .content a:focus { color: #80c0ff !important; }
 
 /* ========== PDF list sizing & spacing ========== */
-/* Target the list inside the PDFs container */
-#pdfs ul {
-  margin: 4px 0 0 1rem;          /* minimal top margin */
-}
-#pdfs li {
-  margin: 3px 0 !important;      /* very small gap between items */
-}
+#pdfs ul { margin: 4px 0 0 1rem; }
+#pdfs li { margin: 3px 0 !important; }
 #pdfs li a {
-  display: block;                  /* full row clickable */
-  font-size: 1.05em;               /* still slightly larger than default */
-  line-height: 1.3;                /* compact line height */
-  padding: 4px 6px;                /* smaller padding */
+  display: block;              /* bigger click target */
+  font-size: 1.05em;
+  line-height: 1.3;
+  padding: 4px 6px;
   border-radius: 4px;
-  transition: background 0.2s, color 0.2s;
+  transition: background .2s, color .2s;
 }
 
-/* Light mode hover effect */
+/* Light mode hover */
 #pdfs li a:hover {
   background: rgba(0, 0, 139, 0.08);
   text-decoration: none;
 }
 
-/* Dark mode hover effect */
+/* Dark mode hover */
 body.dark #pdfs li a:hover {
   background: rgba(77, 163, 255, 0.18);
 }
 
-/* ===== Mobile Responsive Fix ===== */
+/* ===== Mobile Responsive Fix (no effect on desktop) ===== */
 @media (max-width: 768px) {
-  /* Sidebar takes full width */
   .sidebar {
     width: 100%;
     height: auto;
     position: relative;
     float: none;
     border-right: none;
-    border-bottom: 1px solid var(--border);
+    border-bottom: 1px solid var(--border, #ddd);
   }
-
-  /* Content shifts under sidebar */
-  .content {
-    margin-left: 0;
-  }
-
-  /* Make sure lists and inputs fit */
-  #search {
-    width: 100%;
-    box-sizing: border-box;
-  }
+  .content { margin-left: 0; }
+  #search { width: 100%; box-sizing: border-box; }
 }
-
