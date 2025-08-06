@@ -1,3 +1,4 @@
+/* ========== Base layout ========== */
 body {
   margin: 0;
   font-family: Arial, sans-serif;
@@ -17,74 +18,72 @@ body {
   padding: 20px;
 }
 
-/* Default link styles (light mode) */
+/* ========== Links (light mode defaults) ========== */
 a {
   text-decoration: none;
   color: darkblue;
 }
-
 a:hover {
   text-decoration: underline;
 }
 
-/* Brighten headings in dark mode */
-body.dark h1, 
+/* ========== Dark mode readability ========== */
+body.dark h1,
 body.dark h2 {
-  color: #ffffff;
+  color: #ffffff;                 /* bright headings */
 }
-
-/* Brighten intro paragraph in dark mode */
 body.dark #intro {
-  color: #dddddd;
+  color: #dddddd;                 /* softer paragraph */
 }
 
-/* Sidebar dark mode styling */
+/* Sidebar in dark mode */
 body.dark .sidebar {
   background: #1e1e1e;
   border-right: 1px solid #444;
 }
-
 body.dark .sidebar h2,
 body.dark .sidebar a {
   color: #f0f0f0;
 }
-
 body.dark .sidebar a:hover {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.10);
 }
 
-/* Dark mode links in content area */
+/* Content links in dark mode (override) */
 body.dark .content a,
 body.dark .content a:link,
 body.dark .content a:visited {
   color: #4da3ff !important;
 }
-
 body.dark .content a:hover,
 body.dark .content a:focus {
   color: #80c0ff !important;
 }
 
-/* --- PDF file list styles --- */
-.content ul li {
-  margin-bottom: 14px;         /* extra space between items */
+/* ========== PDF list sizing & spacing ========== */
+/* Target the list inside the PDFs container */
+#pdfs ul {
+  margin: 12px 0 0 1rem;          /* space above list; keep bullet indent */
 }
-
-.content ul li a {
-  font-size: 1.15em;           /* slightly larger text */
-  display: inline-block;
-  padding: 6px 8px;            /* bigger clickable area */
-  border-radius: 6px;          /* rounded hover background */
+#pdfs li {
+  margin: 12px 0 !important;      /* clear gap between items */
+}
+#pdfs li a {
+  display: block;                  /* full row is clickable */
+  font-size: 1.2em;                /* larger filename */
+  line-height: 1.6;                /* taller line for readability */
+  padding: 8px 10px;               /* bigger click target */
+  border-radius: 6px;
   transition: background 0.2s, color 0.2s;
 }
 
 /* Light mode hover effect */
-.content ul li a:hover {
-  background: rgba(0, 0, 139, 0.1); /* light blue background */
+#pdfs li a:hover {
+  background: rgba(0, 0, 139, 0.08);  /* subtle blue tint */
   text-decoration: none;
 }
 
 /* Dark mode hover effect */
-body.dark .content ul li a:hover {
-  background: rgba(77, 163, 255, 0.15); /* subtle light-blue glow */
+body.dark #pdfs li a:hover {
+  background: rgba(77, 163, 255, 0.18); /* brighter tint for dark bg */
 }
