@@ -107,8 +107,19 @@
     }
     /* Dynamic course title */
     #course-title {
-      margin: 32px 0 8px;
+      display: none;
       font-size: 22px;
+      background: var(--bg);
+      padding: 8px 0;
+      z-index: 10;
+    }
+    #course-title.visible {
+      display: block;
+      margin-top: 32px; /* space only when visible */
+      margin-bottom: 8px;
+      position: sticky;
+      top: 0; /* stick to top of content area */
+      border-bottom: 1px solid var(--border);
     }
   </style>
 </head>
@@ -131,7 +142,7 @@
     <p id="intro">Semester 2, 2025 notes. Use the sidebar to switch subjects, search below to filter PDFs.</p>
 
     <!-- Course title placeholder -->
-    <h2 id="course-title" style="display:none;"></h2>
+    <h2 id="course-title"></h2>
 
     <input type="text" id="search" placeholder="Search notes... (filters filenames)">
     <div id="pdfs" class="group"></div>
@@ -210,13 +221,13 @@
     function render() {
       pdfContainer.innerHTML = "";
 
-      // Show/hide title
+      // Show/hide title with spacing only when visible
       if (currentSubject !== "ALL") {
         courseTitleEl.textContent = SUBJECT_TITLES[currentSubject] || currentSubject;
-        courseTitleEl.style.display = "block";
+        courseTitleEl.classList.add("visible");
       } else {
         courseTitleEl.textContent = "";
-        courseTitleEl.style.display = "none";
+        courseTitleEl.classList.remove("visible");
       }
 
       const toRender = currentSubject === "ALL" ? SUBJECTS : [currentSubject];
