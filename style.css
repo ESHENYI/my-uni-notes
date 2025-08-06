@@ -32,7 +32,22 @@ body.dark h2 {
   color: #ffffff; /* pure white for maximum contrast */
 }
 
-/* Optional: brighten intro paragraph too */
+/* Brighten intro paragraph in dark mode */
 body.dark #intro {
   color: #dddddd; /* softer white so it's not too glaring */
+}
+
+/* Brighten sidebar text and background in dark mode */
+body.dark .sidebar {
+  background: #1e1e1e; /* darker background */
+  border-right: 1px solid #444;
+}
+
+body.dark .sidebar h2,
+body.dark .sidebar a {
+  color: #f0f0f0; /* light text for readability */
+}
+
+body.dark .sidebar a:hover {
+  background: rgba(255, 255, 255, 0.1); /* subtle highlight */
 }
