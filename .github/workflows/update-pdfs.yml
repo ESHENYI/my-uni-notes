@@ -1,0 +1,34 @@
+name: Update PDFs JSON
+
+on:
+  push:
+    paths:
+      - 'files/**'     # run only when files in /files change
+      - '.github/workflows/update-pdfs.yml'
+      - 'update_pdfs.py'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: Run script
+        run: python update_pdfs.py
+
+      - name: Commit and push changes
+        run: |
+          git config --local user.email "actions@github.com"
+          git config --local user.name "GitHub Actions"
+          git add pdfs.json
+          git commit -m "Auto-update pdfs.json" || echo "No changes to commit"
+          git push
