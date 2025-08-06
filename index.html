@@ -67,7 +67,11 @@
     // }
     const PJSON_URL = "pdfs.json";
     const SUBJECTS = ["CIVL6415", "MATH3301", "MATH3405"]; // must match your folder names under /files/
-
+    const SUBJECT_TITLES = {
+      "CIVL6415": "CIVL6415 COURSE NAME",
+      "MATH3303": "MATH3303 COURSE NAME",
+      "MATH3405": "MATH3405 COURSE NAME"
+    };
     // ---- STATE ----
     let data = {};                // { subject: [file.pdf, ...] }
     let currentSubject = "ALL";   // "ALL" or one of SUBJECTS
