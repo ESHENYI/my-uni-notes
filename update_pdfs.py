@@ -1,20 +1,17 @@
 import os, json
 
-# Folder that contains subject folders (CIVL6415, MATH3303, etc.)
-base_folder = "files"
-
+BASE = "files"
 data = {}
 
-# Loop through each subject folder inside /files
-for subject in os.listdir(base_folder):
-    subject_path = os.path.join(base_folder, subject)
+# Scan each subject folder in /files
+for subject in os.listdir(BASE):
+    subject_path = os.path.join(BASE, subject)
     if os.path.isdir(subject_path):
-        # Collect only PDF files in this folder
-        pdf_files = [f for f in os.listdir(subject_path) if f.lower().endswith(".pdf")]
-        data[subject] = sorted(pdf_files)
+        pdfs = [f for f in os.listdir(subject_path) if f.lower().endswith(".pdf")]
+        data[subject] = sorted(pdfs)
 
-# Save as pdfs.json in the repo root
-with open("pdfs.json", "w") as f:
-    json.dump(data, f, indent=2)
+# Write to pdfs.json in repo root
+with open("pdfs.json", "w") as fp:
+    json.dump(data, fp, indent=2)
 
-print("pdfs.json updated!")
+print("✅ pdfs.json updated!")
