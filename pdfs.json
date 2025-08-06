@@ -1,5 +1,7 @@
 {
-  "CIVL6415": ["week1.pdf", "week2.pdf"],
-  "MATH3301": ["notes1.pdf"],
-  "MATH3405": ["project.pdf"]
+  "CIVL6415": [
+    "CIVL6415 notes.pdf"
+  ],
+  "MATH3301": [],
+  "MATH3405": []
 }
