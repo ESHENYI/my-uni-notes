@@ -63,27 +63,27 @@ body.dark .content a:focus {
 /* ========== PDF list sizing & spacing ========== */
 /* Target the list inside the PDFs container */
 #pdfs ul {
-  margin: 12px 0 0 1rem;          /* space above list; keep bullet indent */
+  margin: 8px 0 0 1rem;          /* slightly smaller top margin */
 }
 #pdfs li {
-  margin: 12px 0 !important;      /* clear gap between items */
+  margin: 6px 0 !important;      /* smaller vertical gap */
 }
 #pdfs li a {
   display: block;                  /* full row is clickable */
-  font-size: 1.2em;                /* larger filename */
-  line-height: 1.6;                /* taller line for readability */
-  padding: 8px 10px;               /* bigger click target */
+  font-size: 1.1em;                /* slightly larger filename */
+  line-height: 1.4;                /* more compact height */
+  padding: 6px 8px;                /* smaller click padding */
   border-radius: 6px;
   transition: background 0.2s, color 0.2s;
 }
 
 /* Light mode hover effect */
 #pdfs li a:hover {
-  background: rgba(0, 0, 139, 0.08);  /* subtle blue tint */
+  background: rgba(0, 0, 139, 0.08);
   text-decoration: none;
 }
 
 /* Dark mode hover effect */
 body.dark #pdfs li a:hover {
-  background: rgba(77, 163, 255, 0.18); /* brighter tint for dark bg */
+  background: rgba(77, 163, 255, 0.18);
 }
