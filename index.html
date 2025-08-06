@@ -41,7 +41,7 @@
     <ul id="subject-list">
       <li><a href="#" data-subject="ALL" class="active">All PDFs</a></li>
       <li><a href="#" data-subject="CIVL6415">CIVL6415</a></li>
-      <li><a href="#" data-subject="MATH3303">MATH3303</a></li>
+      <li><a href="#" data-subject="MATH3301">MATH3301</a></li>
       <li><a href="#" data-subject="MATH3405">MATH3405</a></li>
     </ul>
     <div class="toggle-wrap">
@@ -62,11 +62,11 @@
     // The JSON file lists PDFs for each subject folder:
     // {
     //   "CIVL6415": ["week1.pdf", "week2.pdf"],
-    //   "MATH3303": ["algebra1.pdf"],
+    //   "MATH3301": ["algebra1.pdf"],
     //   "MATH3405": ["stochastic-processes.pdf"]
     // }
     const PJSON_URL = "pdfs.json";
-    const SUBJECTS = ["CIVL6415", "MATH3303", "MATH3405"]; // must match your folder names under /files/
+    const SUBJECTS = ["CIVL6415", "MATH3301", "MATH3405"]; // must match your folder names under /files/
 
     // ---- STATE ----
     let data = {};                // { subject: [file.pdf, ...] }
