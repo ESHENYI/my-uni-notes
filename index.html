@@ -5,7 +5,6 @@
   <title>My Uni Notes</title>
   <link rel="stylesheet" href="style.css">
   <style>
-    /* Minimal styling (use/merge with your style.css as you like) */
     :root {
       --bg: #ffffff; --text: #000; --link: #0645ad; --sidebar-bg: #f3f3f3; --border: #ddd;
       --muted: #666;
@@ -59,22 +58,17 @@
 
   <script>
     // ---- CONFIG ----
-    // The JSON file lists PDFs for each subject folder:
-    // {
-    //   "CIVL6415": ["week1.pdf", "week2.pdf"],
-    //   "MATH3301": ["algebra1.pdf"],
-    //   "MATH3405": ["stochastic-processes.pdf"]
-    // }
     const PJSON_URL = "pdfs.json";
     const SUBJECTS = ["CIVL6415", "MATH3301", "MATH3405"]; // must match your folder names under /files/
     const SUBJECT_TITLES = {
       "CIVL6415": "CIVL6415 COURSE NAME",
-      "MATH3303": "MATH3303 COURSE NAME",
+      "MATH3301": "MATH3301 COURSE NAME",
       "MATH3405": "MATH3405 COURSE NAME"
     };
+
     // ---- STATE ----
-    let data = {};                // { subject: [file.pdf, ...] }
-    let currentSubject = "ALL";   // "ALL" or one of SUBJECTS
+    let data = {};
+    let currentSubject = "ALL";
     let query = "";
 
     // ---- DOM ----
@@ -83,7 +77,7 @@
     const subjectList = document.getElementById("subject-list");
     const toggleBtn = document.getElementById("toggle-dark");
 
-    // Persist dark mode choice across visits
+    // Load theme preference
     const savedTheme = localStorage.getItem("theme");
     if (savedTheme === "dark") {
       document.body.classList.remove("light");
@@ -93,56 +87,61 @@
       document.body.classList.add("light");
     }
 
+    // Toggle dark mode
     toggleBtn.addEventListener("click", () => {
       document.body.classList.toggle("dark");
       document.body.classList.toggle("light");
       localStorage.setItem("theme", document.body.classList.contains("dark") ? "dark" : "light");
     });
 
-    // Sidebar subject clicks
+    // Sidebar click handling
     subjectList.addEventListener("click", (e) => {
       const link = e.target.closest("a[data-subject]");
       if (!link) return;
       e.preventDefault();
       currentSubject = link.dataset.subject;
-      // set active class
       [...subjectList.querySelectorAll("a")].forEach(a => a.classList.remove("active"));
       link.classList.add("active");
       render();
     });
 
-    // Search
+    // Search bar filtering
     searchInput.addEventListener("input", () => {
       query = searchInput.value.trim().toLowerCase();
       render();
     });
 
-    // Fetch JSON + render
+    // Load data
     fetch(PJSON_URL)
       .then(r => r.json())
-      .then(json => {
-        data = json;
-        render();
-      })
+      .then(json => { data = json; render(); })
       .catch(() => {
         pdfContainer.innerHTML = `<p class="empty">Couldn’t load <code>${PJSON_URL}</code>. Make sure it’s in the repo root.</p>`;
       });
 
-    // Render according to currentSubject + query
+    // Render function
     function render() {
       pdfContainer.innerHTML = "";
-      const toRender = currentSubject === "ALL" ? SUBJECTS : [currentSubject];
 
+      // If one subject is selected, show its course title
+      if (currentSubject !== "ALL") {
+        const title = document.createElement("h2");
+        title.textContent = SUBJECT_TITLES[currentSubject] || currentSubject;
+        pdfContainer.appendChild(title);
+      }
+
+      const toRender = currentSubject === "ALL" ? SUBJECTS : [currentSubject];
       let totalShown = 0;
+
       toRender.forEach(subject => {
         const files = (data[subject] || []);
         const list = document.createElement("ul");
+
         files.forEach(file => {
           const nameNoExt = file.replace(/\.pdf$/i, "");
           if (!query || nameNoExt.toLowerCase().includes(query)) {
             const li = document.createElement("li");
             const a = document.createElement("a");
-            // Use subject as folder (exact case); file as exact filename
             a.href = `files/${encodeURIComponent(subject)}/${encodeURIComponent(file)}`;
             a.target = "_blank";
             a.rel = "noopener";
@@ -156,17 +155,18 @@
         if (list.children.length > 0) {
           const wrap = document.createElement("div");
           wrap.className = "group";
-          const h2 = document.createElement("h2");
-          h2.textContent = subject;
-          // Only show group headings when viewing ALL; for a single subject, we can skip the heading
-          if (currentSubject === "ALL") wrap.appendChild(h2);
+          if (currentSubject === "ALL") {
+            const h2 = document.createElement("h2");
+            h2.textContent = subject;
+            wrap.appendChild(h2);
+          }
           wrap.appendChild(list);
           pdfContainer.appendChild(wrap);
         }
       });
 
       if (totalShown === 0) {
-        pdfContainer.innerHTML = `<p class="empty">No PDFs match your filter${currentSubject === "ALL" ? "" : ` in <strong>${currentSubject}</strong>`}.</p>`;
+        pdfContainer.innerHTML += `<p class="empty">No PDFs match your filter${currentSubject === "ALL" ? "" : ` in <strong>${currentSubject}</strong>`}.</p>`;
       }
     }
   </script>
