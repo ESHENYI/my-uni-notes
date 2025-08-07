@@ -1,93 +1,60 @@
 :root {
   --bg: #ffffff;
-  --text: #000;
+  --text: #000000;
   --link: #0645ad;
   --sidebar-bg: #f3f3f3;
   --border: #ddd;
   --muted: #666;
 }
+
 body.dark {
   --bg: #121212;
   --text: #f0f0f0;
-  --link: #80b3ff;
+  --link: #66aaff;
   --sidebar-bg: #1e1e1e;
   --border: #333;
-  --muted: #aaa;
+  --muted: #bbb;
 }
+
 body {
   margin: 0;
   font-family: Arial, sans-serif;
   background: var(--bg);
   color: var(--text);
   transition: background 0.25s, color 0.25s;
+  display: flex;
+  flex-direction: row;
+  min-height: 100vh;
 }
 
-/* Layout fix: use flex instead of float */
-body > .sidebar {
+/* Sidebar */
+.sidebar {
   width: 240px;
-  min-height: 100vh;
   background: var(--sidebar-bg);
   padding: 16px;
   box-sizing: border-box;
   border-right: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  height: 100vh;
   flex-shrink: 0;
 }
-.content {
-  flex: 1;
-  padding: 20px;
-  box-sizing: border-box;
-}
-body {
-  display: flex;
-  flex-direction: row;
+
+.sidebar h2 {
+  margin: 0 0 10px;
+  font-size: 18px;
 }
 
-h1 {
-  margin-top: 0;
-}
-#intro {
-  color: var(--muted);
-  margin-bottom: 14px;
-}
-#search {
-  width: 100%;
-  padding: 8px;
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  background: var(--bg);
-  color: var(--text);
-  box-sizing: border-box;
-}
-.group {
-  margin-top: 18px;
-}
-.group h2 {
-  margin: 16px 0 8px;
-  font-size: 20px;
-}
-.group ul {
-  padding-left: 18px;
-}
-.group li {
-  margin-bottom: 10px;
-  font-size: 1.05em;
-}
-.empty {
-  color: var(--muted);
-  margin-top: 8px;
-}
-.sidebar h2 {
-  font-size: 18px;
-  margin: 0 0 10px;
-}
 .sidebar ul {
   list-style: none;
-  padding: 0;
   margin: 0;
+  padding: 0;
 }
+
 .sidebar li {
   margin-bottom: 8px;
 }
+
 .sidebar a {
   text-decoration: none;
   color: var(--text);
@@ -95,18 +62,77 @@ h1 {
   padding: 6px 8px;
   border-radius: 6px;
 }
+
 .sidebar a:hover {
   background: rgba(0, 0, 0, 0.06);
 }
+
 body.dark .sidebar a:hover {
   background: rgba(255, 255, 255, 0.08);
 }
+
 .sidebar a.active {
   outline: 2px solid var(--border);
 }
-.toggle-wrap {
-  margin-top: 16px;
+
+/* Content */
+.content {
+  flex: 1;
+  padding: 20px;
+  box-sizing: border-box;
 }
+
+h1 {
+  margin-top: 0;
+}
+
+#intro {
+  color: var(--muted);
+  margin-bottom: 14px;
+}
+
+#search {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--bg);
+  color: var(--text);
+}
+
+/* Grouping & Files */
+.group {
+  margin-top: 18px;
+}
+
+.group h2 {
+  margin: 16px 0 8px;
+  font-size: 20px;
+}
+
+.group ul {
+  margin: 0;
+  padding-left: 18px;
+}
+
+.group li {
+  margin-bottom: 6px;
+}
+
+a {
+  color: var(--link);
+}
+
+a:hover {
+  text-decoration: underline;
+  opacity: 0.85;
+}
+
+.empty {
+  color: var(--muted);
+  margin-top: 8px;
+}
+
 .btn {
   padding: 8px 10px;
   border: 1px solid var(--border);
@@ -115,12 +141,16 @@ body.dark .sidebar a:hover {
   border-radius: 6px;
   cursor: pointer;
 }
+
+/* Course title header */
 #course-title {
   display: none;
   font-size: 22px;
+  background: var(--bg);
   padding: 8px 0;
   z-index: 10;
 }
+
 #course-title.visible {
   display: block;
   margin-top: 32px;
@@ -128,26 +158,22 @@ body.dark .sidebar a:hover {
   position: sticky;
   top: 0;
   border-bottom: 1px solid var(--border);
-  background: var(--bg);
 }
 
-/* ✅ Fix iPhone/iPad landscape and small screens */
-@media (max-width: 900px) {
+/* Responsive: Stack layout on small screens */
+@media (max-width: 768px) {
   body {
     flex-direction: column;
   }
+
   .sidebar {
     width: 100%;
+    height: auto;
     border-right: none;
     border-bottom: 1px solid var(--border);
-    min-height: auto;
   }
+
   .content {
     margin-left: 0;
-    padding: 16px;
-  }
-  #course-title.visible {
-    position: static;
-    margin-top: 20px;
   }
 }
