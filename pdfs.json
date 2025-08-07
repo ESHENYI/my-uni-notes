@@ -1,14 +1,15 @@
 {
+  "MATH3405": [
+    "MATH3405 Notes.pdf",
+    "a1.pdf"
+  ],
   "CIVL4518": [],
   "CIVL6415": [
     "Lecture 2.pdf"
   ],
   "MATH3301": [
     "MATH3301 Design Theory Notes.pdf",
+    "Textbook - Combinatorial Designs Constructions and Analysis by Douglas Stinson.pdf",
     "Textbook - Design Theory.pdf"
-  ],
-  "MATH3405": [
-    "MATH3405 Notes.pdf",
-    "a1.pdf"
   ]
 }
