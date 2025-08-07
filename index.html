@@ -2,16 +2,15 @@
 <html>
 <head>
   <meta charset="utf-8" />
-  <!-- IMPORTANT for mobile -->
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>My Uni Notes</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body class="light">
   <div class="sidebar">
     <h2>Subjects</h2>
     <ul id="subject-list">
-      <li><a href="#" data-subject="ALL" class="active">All PDFs</a></li>
+      <li><a href="#" data-subject="ALL" class="active">All Files</a></li>
       <li><a href="#" data-subject="CIVL4518">CIVL4518</a></li>
       <li><a href="#" data-subject="CIVL6415">CIVL6415</a></li>
       <li><a href="#" data-subject="MATH3301">MATH3301</a></li>
@@ -24,18 +23,15 @@
 
   <div class="content">
     <h1>Welcome to My Uni Notes</h1>
-    <p id="intro">Semester 2, 2025 notes. Use the sidebar to switch subjects, search below to filter PDFs.</p>
-
-    <!-- Course title shown when a single subject is selected -->
+    <p id="intro">Semester 2, 2025 notes. Use the sidebar to switch subjects, search below to filter files.</p>
     <h2 id="course-title"></h2>
 
-    <input type="text" id="search" placeholder="Search notes... (filters filenames)">
+    <input type="text" id="search" placeholder="Search files... (filters filenames)">
     <div id="pdfs" class="group"></div>
   </div>
 
   <script>
-    // ---- CONFIG ----
-    const PJSON_URL = "pdfs.json";
+    const PJSON_URL = "files.json";
     const SUBJECTS = ["CIVL4518", "CIVL6415", "MATH3301", "MATH3405"];
     const SUBJECT_TITLES = {
       "CIVL4518": "CIVL4518 Integrated Design for the Built Environment",
@@ -44,61 +40,45 @@
       "MATH3405": "MATH3405 Differential Geometry"
     };
 
-    // ---- STATE ----
     let data = {};
     let currentSubject = "ALL";
     let query = "";
 
-    // ---- DOM ----
     const pdfContainer = document.getElementById("pdfs");
     const searchInput = document.getElementById("search");
     const subjectList = document.getElementById("subject-list");
     const toggleBtn = document.getElementById("toggle-dark");
     const courseTitleEl = document.getElementById("course-title");
 
-    // Load saved theme
+    // Load theme
     const savedTheme = localStorage.getItem("theme");
     if (savedTheme === "dark") {
-      document.body.classList.remove("light");
-      document.body.classList.add("dark");
-    } else {
-      document.body.classList.remove("dark");
-      document.body.classList.add("light");
+      document.body.classList.replace("light", "dark");
     }
 
-    // Dark mode toggle
     toggleBtn.addEventListener("click", () => {
       document.body.classList.toggle("dark");
       document.body.classList.toggle("light");
       localStorage.setItem("theme", document.body.classList.contains("dark") ? "dark" : "light");
     });
 
-    // Sidebar subject clicks (also clear search so it doesn't hide items)
     subjectList.addEventListener("click", (e) => {
       const link = e.target.closest("a[data-subject]");
       if (!link) return;
       e.preventDefault();
-
       currentSubject = link.dataset.subject;
-
-      // clear search so you always see results when switching subjects
       searchInput.value = "";
       query = "";
-
-      // set active class
-      [...subjectList.querySelectorAll("a")].forEach(a => a.classList.remove("active"));
+      subjectList.querySelectorAll("a").forEach(a => a.classList.remove("active"));
       link.classList.add("active");
-
       render();
     });
 
-    // Search input
     searchInput.addEventListener("input", () => {
       query = searchInput.value.trim().toLowerCase();
       render();
     });
 
-    // Fetch the JSON list
     fetch(PJSON_URL)
       .then(r => r.json())
       .then(json => {
@@ -109,7 +89,6 @@
         pdfContainer.innerHTML = `<p class="empty">Couldn’t load <code>${PJSON_URL}</code>. Make sure it’s in the repo root.</p>`;
       });
 
-    // Render the lists
     function render() {
       pdfContainer.innerHTML = "";
 
@@ -129,14 +108,21 @@
         const list = document.createElement("ul");
 
         files.forEach(file => {
-          const nameNoExt = file.replace(/\.pdf$/i, "");
+          const nameNoExt = file.replace(/\.[^/.]+$/, "");  // remove extension
           if (!query || nameNoExt.toLowerCase().includes(query)) {
+            const fileExt = file.split('.').pop().toLowerCase();
+            let icon = "📄";
+            if (fileExt === "pdf") icon = "📕";
+            else if (["doc", "docx"].includes(fileExt)) icon = "📝";
+            else if (["ppt", "pptx"].includes(fileExt)) icon = "📊";
+            else if (["jpg", "jpeg", "png"].includes(fileExt)) icon = "🖼️";
+
             const li = document.createElement("li");
             const a = document.createElement("a");
             a.href = `files/${encodeURIComponent(subject)}/${encodeURIComponent(file)}`;
             a.target = "_blank";
             a.rel = "noopener";
-            a.textContent = nameNoExt;
+            a.textContent = `${icon} ${file}`;
             li.appendChild(a);
             list.appendChild(li);
             totalShown++;
@@ -157,7 +143,7 @@
       });
 
       if (totalShown === 0) {
-        pdfContainer.innerHTML = `<p class="empty">No PDFs match your filter${currentSubject === "ALL" ? "" : ` in <strong>${currentSubject}</strong>`}.</p>`;
+        pdfContainer.innerHTML = `<p class="empty">No files match your filter${currentSubject === "ALL" ? "" : ` in <strong>${currentSubject}</strong>`}.</p>`;
       }
     }
   </script>
