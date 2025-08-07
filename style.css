@@ -119,3 +119,23 @@ body.dark .group ul li a:hover { background: rgba(77,163,255,0.18); }
   .content { margin-left: 0; }
   #search { width: 100%; box-sizing: border-box; }
 }
+
+@media (max-width: 900px) {
+  .sidebar {
+    width: 100%;
+    height: auto;
+    position: relative;
+    float: none;
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .content {
+    margin-left: 0;
+    padding: 16px;
+  }
+
+  #course-title.visible {
+    margin-top: 16px;
+  }
+}
