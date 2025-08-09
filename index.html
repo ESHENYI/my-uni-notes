@@ -40,6 +40,17 @@
       "MATH3405": "MATH3405 Differential Geometry"
     };
 
+    // Map file extensions to icon image paths (add more icons whenever you add them)
+    function getFileIcon(ext) {
+      ext = (ext || "").toLowerCase();
+      if (ext === "pdf") return "icons/Simiographics-Mixed-Book.512.png"; // your skeuomorphic PDF icon
+      // Add more when you have them, e.g.:
+      // if (["doc","docx"].includes(ext)) return "icons/word.png";
+      // if (["ppt","pptx"].includes(ext)) return "icons/powerpoint.png";
+      // if (["jpg","jpeg","png","gif"].includes(ext)) return "icons/image.png";
+      return ""; // empty = no custom icon, just text link
+    }
+
     let data = {};
     let currentSubject = "ALL";
     let query = "";
@@ -108,21 +119,30 @@
         const list = document.createElement("ul");
 
         files.forEach(file => {
-          const nameNoExt = file.replace(/\.[^/.]+$/, "");  // remove extension
+          const nameNoExt = file.replace(/\.[^/.]+$/, ""); // remove extension for searching
           if (!query || nameNoExt.toLowerCase().includes(query)) {
-            const fileExt = file.split('.').pop().toLowerCase();
-            let icon = "📄";
-            if (fileExt === "pdf") icon = "📕";
-            else if (["doc", "docx"].includes(fileExt)) icon = "📝";
-            else if (["ppt", "pptx"].includes(fileExt)) icon = "📊";
-            else if (["jpg", "jpeg", "png"].includes(fileExt)) icon = "🖼️";
+            const fileExt = file.split(".").pop();
+            const iconPath = getFileIcon(fileExt);
 
             const li = document.createElement("li");
+
+            // link
             const a = document.createElement("a");
             a.href = `files/${encodeURIComponent(subject)}/${encodeURIComponent(file)}`;
             a.target = "_blank";
             a.rel = "noopener";
-            a.textContent = `${icon} ${file}`;
+            a.textContent = file; // show full filename (with extension)
+
+            // icon (only if we have an image path)
+            if (iconPath) {
+              const img = document.createElement("img");
+              img.src = iconPath;
+              img.alt = `${fileExt.toUpperCase()} file`;
+              img.className = "file-icon"; // style in style.css
+              // place icon before the text
+              a.prepend(img);
+            }
+
             li.appendChild(a);
             list.appendChild(li);
             totalShown++;
