@@ -130,7 +130,8 @@ h1 {
 }
 
 .group li a {
-  display: block;
+  display: flex;           /* allow icon + text inline */
+  align-items: center;     /* vertical center icon */
   width: 100%;
   padding: 6px 10px;
   border-radius: 6px;
@@ -169,6 +170,15 @@ body.dark .group li a:hover {
   top: 0;
   border-bottom: 1px solid var(--border);
   background: var(--bg);
+}
+
+/* skeuomorphic file icons */
+.file-icon {
+  width: 18px;
+  height: 18px;
+  margin-right: 8px;
+  border-radius: 3px;
+  flex-shrink: 0;
 }
 
 /* Mobile Responsive */
