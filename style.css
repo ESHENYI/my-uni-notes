@@ -22,6 +22,10 @@ body {
   background: var(--bg);
   color: var(--text);
   transition: background 0.25s, color 0.25s;
+}
+
+/* Flex container for sidebar + content */
+.app-wrap {
   display: flex;
   flex-direction: row;
   min-height: 100vh;
@@ -130,9 +134,8 @@ h1 {
 }
 
 .group li a {
-  display: flex;           /* align icon + text inline */
-  align-items: center;     /* vertical center both */
-  gap: 6px;                /* spacing between icon and text */
+  display: flex;
+  align-items: center;
   width: 100%;
   padding: 6px 10px;
   border-radius: 6px;
@@ -140,7 +143,6 @@ h1 {
   color: var(--link);
   background: transparent;
   transition: background 0.2s;
-  word-break: break-word;  /* handle long filenames gracefully */
 }
 
 .group li a:hover {
@@ -149,6 +151,14 @@ h1 {
 
 body.dark .group li a:hover {
   background: rgba(255, 255, 255, 0.08);
+}
+
+.file-icon {
+  width: 18px;
+  height: 18px;
+  margin-right: 8px;
+  border-radius: 3px;
+  flex-shrink: 0;
 }
 
 .empty {
@@ -174,58 +184,41 @@ body.dark .group li a:hover {
   background: var(--bg);
 }
 
-/* skeuomorphic file icons */
-.file-icon {
-  width: 18px;
-  height: 18px;
-  vertical-align: middle;
-  margin-right: 8px;
-  border-radius: 3px;
-  flex-shrink: 0;
-}
-
-/* Soft gate styling */
-#gate {
+/* Soft Gate styles */
+.gate {
   max-width: 480px;
   margin: 80px auto;
+  display: none;
   padding: 20px;
   border: 1px solid var(--border);
   border-radius: 8px;
   background: var(--bg);
-  color: var(--text);
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
-#gate input[type="password"] {
+.gate input {
   width: 100%;
   padding: 10px;
   border: 1px solid var(--border);
   border-radius: 6px;
   background: var(--bg);
   color: var(--text);
-  margin-top: 10px;
 }
 
-#msg {
+.gate .error {
   color: #c33;
   margin-top: 8px;
 }
 
 /* Mobile Responsive */
 @media (max-width: 768px) {
-  body {
+  .app-wrap {
     flex-direction: column;
   }
-
   .sidebar {
     width: 100%;
     height: auto;
     border-right: none;
     border-bottom: 1px solid var(--border);
     position: relative;
-  }
-
-  .content {
-    margin: 0;
   }
 }
