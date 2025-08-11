@@ -7,27 +7,41 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body class="light">
-  <div class="sidebar">
-    <h2>Subjects</h2>
-    <ul id="subject-list">
-      <li><a href="#" data-subject="ALL" class="active">All Files</a></li>
-      <li><a href="#" data-subject="CIVL4518">CIVL4518</a></li>
-      <li><a href="#" data-subject="CIVL6415">CIVL6415</a></li>
-      <li><a href="#" data-subject="MATH3301">MATH3301</a></li>
-      <li><a href="#" data-subject="MATH3405">MATH3405</a></li>
-    </ul>
-    <div class="toggle-wrap">
-      <button id="toggle-dark" class="btn">🌙 Toggle Dark Mode</button>
-    </div>
+
+  <!-- Soft gate UI (shown until unlocked) -->
+  <div id="gate" style="max-width:480px;margin:80px auto;display:none;padding:20px;border:1px solid var(--border);border-radius:8px;background:var(--bg)">
+    <h2 style="margin-top:0">Sign in</h2>
+    <p>Enter password to view your notes.</p>
+    <input id="pw" type="password" placeholder="Password"
+           style="width:100%;padding:10px;border:1px solid var(--border);border-radius:6px;background:var(--bg);color:var(--text)">
+    <button id="enter" class="btn" style="margin-top:10px;width:100%">Unlock</button>
+    <p id="msg" style="color:#c33;margin-top:8px"></p>
   </div>
 
-  <div class="content">
-    <h1>Welcome to My Uni Notes</h1>
-    <p id="intro">Semester 2, 2025 notes. Use the sidebar to switch subjects, search below to filter files.</p>
-    <h2 id="course-title"></h2>
+  <!-- Your existing app (unchanged), just wrapped & initially hidden -->
+  <div id="app" hidden>
+    <div class="sidebar">
+      <h2>Subjects</h2>
+      <ul id="subject-list">
+        <li><a href="#" data-subject="ALL" class="active">All Files</a></li>
+        <li><a href="#" data-subject="CIVL4518">CIVL4518</a></li>
+        <li><a href="#" data-subject="CIVL6415">CIVL6415</a></li>
+        <li><a href="#" data-subject="MATH3301">MATH3301</a></li>
+        <li><a href="#" data-subject="MATH3405">MATH3405</a></li>
+      </ul>
+      <div class="toggle-wrap">
+        <button id="toggle-dark" class="btn">🌙 Toggle Dark Mode</button>
+      </div>
+    </div>
 
-    <input type="text" id="search" placeholder="Search files... (filters filenames)">
-    <div id="pdfs" class="group"></div>
+    <div class="content">
+      <h1>Welcome to My Uni Notes</h1>
+      <p id="intro">Semester 2, 2025 notes. Use the sidebar to switch subjects, search below to filter files.</p>
+      <h2 id="course-title"></h2>
+
+      <input type="text" id="search" placeholder="Search files... (filters filenames)">
+      <div id="pdfs" class="group"></div>
+    </div>
   </div>
 
   <script>
@@ -165,6 +179,47 @@
 
       if (totalShown === 0) {
         pdfContainer.innerHTML = `<p class="empty">No files match your filter${currentSubject === "ALL" ? "" : ` in <strong>${currentSubject}</strong>`}.</p>`;
+      }
+    }
+  </script>
+
+  <!-- Soft gate script: appended only, does not alter your logic -->
+  <script>
+    // Replace this with the SHA-256 HEX of YOUR password (example is "password")
+    const PASSWORD_SHA256_HEX =
+      "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8";
+
+    const $ = s => document.querySelector(s);
+    const enc = s => new TextEncoder().encode(s);
+    const hex = buf => [...new Uint8Array(buf)].map(b => b.toString(16).padStart(2,"0")).join("");
+
+    async function verify(pw) {
+      const d = await crypto.subtle.digest("SHA-256", enc(pw));
+      return hex(d) === PASSWORD_SHA256_HEX;
+    }
+    async function tryUnlock() {
+      const msg = $("#msg");
+      if (msg) msg.textContent = "";
+      const ok = await verify($("#pw").value);
+      if (ok) {
+        $("#app").hidden = false;               // show app
+        $("#gate").style.display = "none";      // hide gate
+        sessionStorage.setItem("unlocked","1"); // remember for this tab
+      } else {
+        if (msg) msg.textContent = "Incorrect password.";
+      }
+    }
+
+    // Show gate unless already unlocked in this tab
+    if (sessionStorage.getItem("unlocked") === "1") {
+      const app = document.getElementById("app");
+      if (app) app.hidden = false;
+    } else {
+      const gate = document.getElementById("gate");
+      if (gate) {
+        gate.style.display = "block";
+        document.getElementById("enter").addEventListener("click", tryUnlock);
+        document.getElementById("pw").addEventListener("keydown", e => { if (e.key === "Enter") tryUnlock(); });
       }
     }
   </script>
