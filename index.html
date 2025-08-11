@@ -8,39 +8,39 @@
 </head>
 <body class="light">
 
-  <!-- Soft gate UI (shown until unlocked) -->
-  <div id="gate" style="max-width:480px;margin:80px auto;display:none;padding:20px;border:1px solid var(--border);border-radius:8px;background:var(--bg)">
-    <h2 style="margin-top:0">Sign in</h2>
+  <!-- Soft gate UI -->
+  <div id="gate" class="gate">
+    <h2>Sign in</h2>
     <p>Enter password to view your notes.</p>
-    <input id="pw" type="password" placeholder="Password"
-           style="width:100%;padding:10px;border:1px solid var(--border);border-radius:6px;background:var(--bg);color:var(--text)">
-    <button id="enter" class="btn" style="margin-top:10px;width:100%">Unlock</button>
-    <p id="msg" style="color:#c33;margin-top:8px"></p>
+    <input id="pw" type="password" placeholder="Password">
+    <button id="enter" class="btn">Unlock</button>
+    <p id="msg" class="error"></p>
   </div>
 
-  <!-- Your existing app (unchanged), just wrapped & initially hidden -->
+  <!-- App -->
   <div id="app" hidden>
-    <div class="sidebar">
-      <h2>Subjects</h2>
-      <ul id="subject-list">
-        <li><a href="#" data-subject="ALL" class="active">All Files</a></li>
-        <li><a href="#" data-subject="CIVL4518">CIVL4518</a></li>
-        <li><a href="#" data-subject="CIVL6415">CIVL6415</a></li>
-        <li><a href="#" data-subject="MATH3301">MATH3301</a></li>
-        <li><a href="#" data-subject="MATH3405">MATH3405</a></li>
-      </ul>
-      <div class="toggle-wrap">
-        <button id="toggle-dark" class="btn">🌙 Toggle Dark Mode</button>
+    <div class="app-wrap">
+      <div class="sidebar">
+        <h2>Subjects</h2>
+        <ul id="subject-list">
+          <li><a href="#" data-subject="ALL" class="active">All Files</a></li>
+          <li><a href="#" data-subject="CIVL4518">CIVL4518</a></li>
+          <li><a href="#" data-subject="CIVL6415">CIVL6415</a></li>
+          <li><a href="#" data-subject="MATH3301">MATH3301</a></li>
+          <li><a href="#" data-subject="MATH3405">MATH3405</a></li>
+        </ul>
+        <div class="toggle-wrap">
+          <button id="toggle-dark" class="btn">🌙 Toggle Dark Mode</button>
+        </div>
       </div>
-    </div>
 
-    <div class="content">
-      <h1>Welcome to My Uni Notes</h1>
-      <p id="intro">Semester 2, 2025 notes. Use the sidebar to switch subjects, search below to filter files.</p>
-      <h2 id="course-title"></h2>
-
-      <input type="text" id="search" placeholder="Search files... (filters filenames)">
-      <div id="pdfs" class="group"></div>
+      <div class="content">
+        <h1>Welcome to My Uni Notes</h1>
+        <p id="intro">Semester 2, 2025 notes. Use the sidebar to switch subjects, search below to filter files.</p>
+        <h2 id="course-title"></h2>
+        <input type="text" id="search" placeholder="Search files... (filters filenames)">
+        <div id="pdfs" class="group"></div>
+      </div>
     </div>
   </div>
 
@@ -54,16 +54,13 @@
       "MATH3405": "MATH3405 Differential Geometry"
     };
 
-    // Map file extensions to icon image paths (add more icons whenever you add them)
     function getFileIcon(ext) {
       ext = (ext || "").toLowerCase();
-      if (ext === "pdf") return "icons/Treetog-I-PDF.256.png"; // your skeuomorphic PDF icon
-      // Add more when you have them, e.g.:
+      if (ext === "pdf") return "icons/Treetog-I-PDF.256.png";
       if (["doc","docx"].includes(ext)) return "icons/Word.png";
       if (["ppt","pptx"].includes(ext)) return "icons/ppt.png";
       if (["txt"].includes(ext)) return "icons/Txt.png";
-      // if (["jpg","jpeg","png","gif"].includes(ext)) return "icons/image.png";
-      return ""; // empty = no custom icon, just text link
+      return "";
     }
 
     let data = {};
@@ -76,7 +73,6 @@
     const toggleBtn = document.getElementById("toggle-dark");
     const courseTitleEl = document.getElementById("course-title");
 
-    // Load theme
     const savedTheme = localStorage.getItem("theme");
     if (savedTheme === "dark") {
       document.body.classList.replace("light", "dark");
@@ -107,10 +103,7 @@
 
     fetch(PJSON_URL)
       .then(r => r.json())
-      .then(json => {
-        data = json;
-        render();
-      })
+      .then(json => { data = json; render(); })
       .catch(() => {
         pdfContainer.innerHTML = `<p class="empty">Couldn’t load <code>${PJSON_URL}</code>. Make sure it’s in the repo root.</p>`;
       });
@@ -134,27 +127,23 @@
         const list = document.createElement("ul");
 
         files.forEach(file => {
-          const nameNoExt = file.replace(/\.[^/.]+$/, ""); // remove extension for searching
+          const nameNoExt = file.replace(/\.[^/.]+$/, "");
           if (!query || nameNoExt.toLowerCase().includes(query)) {
             const fileExt = file.split(".").pop();
             const iconPath = getFileIcon(fileExt);
 
             const li = document.createElement("li");
-
-            // link
             const a = document.createElement("a");
             a.href = `files/${encodeURIComponent(subject)}/${encodeURIComponent(file)}`;
             a.target = "_blank";
             a.rel = "noopener";
-            a.textContent = file; // show full filename (with extension)
+            a.textContent = file;
 
-            // icon (only if we have an image path)
             if (iconPath) {
               const img = document.createElement("img");
               img.src = iconPath;
               img.alt = `${fileExt.toUpperCase()} file`;
-              img.className = "file-icon"; // style in style.css
-              // place icon before the text
+              img.className = "file-icon";
               a.prepend(img);
             }
 
@@ -181,14 +170,10 @@
         pdfContainer.innerHTML = `<p class="empty">No files match your filter${currentSubject === "ALL" ? "" : ` in <strong>${currentSubject}</strong>`}.</p>`;
       }
     }
-  </script>
 
-  <!-- Soft gate script: appended only, does not alter your logic -->
-  <script>
-    // Replace this with the SHA-256 HEX of YOUR password (example is "password")
+    /* Soft Gate */
     const PASSWORD_SHA256_HEX =
       "36d00b53c4d7d2bd0ff2c1fcff6fe8858d1691418c412c60d1a8d350d92aaaed";
-
     const $ = s => document.querySelector(s);
     const enc = s => new TextEncoder().encode(s);
     const hex = buf => [...new Uint8Array(buf)].map(b => b.toString(16).padStart(2,"0")).join("");
@@ -198,29 +183,24 @@
       return hex(d) === PASSWORD_SHA256_HEX;
     }
     async function tryUnlock() {
-      const msg = $("#msg");
-      if (msg) msg.textContent = "";
+      $("#msg").textContent = "";
       const ok = await verify($("#pw").value);
       if (ok) {
-        $("#app").hidden = false;               // show app
-        $("#gate").style.display = "none";      // hide gate
-        sessionStorage.setItem("unlocked","1"); // remember for this tab
+        $("#app").hidden = false;
+        $("#gate").style.display = "none";
+        sessionStorage.setItem("unlocked","1");
       } else {
-        if (msg) msg.textContent = "Incorrect password.";
+        $("#msg").textContent = "Incorrect password.";
       }
     }
 
-    // Show gate unless already unlocked in this tab
     if (sessionStorage.getItem("unlocked") === "1") {
-      const app = document.getElementById("app");
-      if (app) app.hidden = false;
+      $("#app").hidden = false;
+      $("#gate").style.display = "none";
     } else {
-      const gate = document.getElementById("gate");
-      if (gate) {
-        gate.style.display = "block";
-        document.getElementById("enter").addEventListener("click", tryUnlock);
-        document.getElementById("pw").addEventListener("keydown", e => { if (e.key === "Enter") tryUnlock(); });
-      }
+      $("#gate").style.display = "block";
+      $("#enter").addEventListener("click", tryUnlock);
+      $("#pw").addEventListener("keydown", e => { if (e.key === "Enter") tryUnlock(); });
     }
   </script>
 </body>
