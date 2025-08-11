@@ -130,8 +130,9 @@ h1 {
 }
 
 .group li a {
-  display: flex;           /* allow icon + text inline */
-  align-items: center;     /* vertical center icon */
+  display: flex;           /* align icon + text inline */
+  align-items: center;     /* vertical center both */
+  gap: 6px;                /* spacing between icon and text */
   width: 100%;
   padding: 6px 10px;
   border-radius: 6px;
@@ -139,6 +140,7 @@ h1 {
   color: var(--link);
   background: transparent;
   transition: background 0.2s;
+  word-break: break-word;  /* handle long filenames gracefully */
 }
 
 .group li a:hover {
@@ -176,9 +178,37 @@ body.dark .group li a:hover {
 .file-icon {
   width: 18px;
   height: 18px;
+  vertical-align: middle;
   margin-right: 8px;
   border-radius: 3px;
   flex-shrink: 0;
+}
+
+/* Soft gate styling */
+#gate {
+  max-width: 480px;
+  margin: 80px auto;
+  padding: 20px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg);
+  color: var(--text);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+#gate input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--bg);
+  color: var(--text);
+  margin-top: 10px;
+}
+
+#msg {
+  color: #c33;
+  margin-top: 8px;
 }
 
 /* Mobile Responsive */
