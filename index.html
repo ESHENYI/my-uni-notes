@@ -109,6 +109,58 @@
         pdfContainer.innerHTML = `<p class="empty">Couldn’t load <code>${PJSON_URL}</code>. Make sure it’s in the repo root.</p>`;
       });
 
+    /* -------------------------
+       CIVL6415 extra links box
+       ------------------------- */
+    function buildCIVL6415Extras() {
+      // container
+      const extras = document.createElement("div");
+      extras.style.marginTop = "16px";
+      extras.style.padding = "12px 16px";
+      extras.style.border = "1px solid var(--border)";
+      extras.style.borderRadius = "8px";
+      extras.style.background = "var(--sidebar-bg)";
+
+      const h3 = document.createElement("h3");
+      h3.textContent = "Extra Resources";
+      h3.style.margin = "0 0 10px 0";
+      h3.style.fontSize = "16px";
+      h3.style.fontWeight = "bold";
+      extras.appendChild(h3);
+
+      const ul = document.createElement("ul");
+      ul.style.listStyle = "none";
+      ul.style.margin = "0";
+      ul.style.padding = "0";
+
+      const links = [
+        // 🔁 Replace these URLs/titles with your real links
+        { href: "https://example.com/civl6415-site", text: "🌐 Course website / reference" },
+        { href: "https://youtu.be/XXXXXXXXXXX", text: "🎥 Traffic flow simulation video" },
+        { href: "https://example.com/civl6415-reading", text: "📘 Additional reading" },
+      ];
+
+      links.forEach(l => {
+        const li = document.createElement("li");
+        li.style.marginBottom = "8px";
+        const a = document.createElement("a");
+        a.href = l.href;
+        a.target = "_blank";
+        a.rel = "noopener";
+        a.textContent = l.text;
+        a.style.textDecoration = "none";
+        a.style.color = "var(--link)";
+        a.style.fontWeight = "500";
+        a.addEventListener("mouseover", () => a.style.opacity = "0.85");
+        a.addEventListener("mouseout", () => a.style.opacity = "1");
+        li.appendChild(a);
+        ul.appendChild(li);
+      });
+
+      extras.appendChild(ul);
+      return extras;
+    }
+
     function render() {
       pdfContainer.innerHTML = "";
 
@@ -163,6 +215,12 @@
             wrap.appendChild(h2);
           }
           wrap.appendChild(list);
+
+          // ⬇️ Add CIVL6415 extras ONLY for that subject
+          if (subject === "CIVL6415") {
+            wrap.appendChild(buildCIVL6415Extras());
+          }
+
           pdfContainer.appendChild(wrap);
         }
       });
