@@ -1,4 +1,9 @@
 {
+  "CIVL4518": [
+    "CIVL4518 Phase 1 Brief 2025-07-31 CORRECTED.pdf",
+    "How to be a Grad.pdf",
+    "readme.txt"
+  ],
   "MATH3405": [
     "MATH3405 A1.docx",
     "MATH3405 Notes.docx",
@@ -7,21 +12,6 @@
     "Textbook - DG (Part I).pdf",
     "Textbook - DG (Part II).pdf",
     "a1.pdf"
-  ],
-  "CIVL4518": [
-    "CIVL4518 Phase 1 Brief 2025-07-31 CORRECTED.pdf",
-    "How to be a Grad.pdf",
-    "readme.txt"
-  ],
-  "CIVL6415": [
-    "978-1-349-10800-8.pdf",
-    "CIVL6415 Week 4 Notes.docx",
-    "Computer Exercise 1.pdf",
-    "Lecture 2.pdf",
-    "Lecture 4.pdf",
-    "Textbook - Highway Traffic Analysis and Design (Part I).pdf",
-    "Textbook - Highway Traffic Analysis and Design (Part II).pdf",
-    "Tutorial Week 2-4.pdf"
   ],
   "MATH3301": [
     "Assignment1-MATH3301.pdf",
@@ -33,5 +23,15 @@
     "MATH3301 Design Theory Notes.pdf",
     "Textbook - Combinatorial Designs Constructions and Analysis by Douglas Stinson.pdf",
     "Textbook - Design Theory.pdf"
+  ],
+  "CIVL6415": [
+    "978-1-349-10800-8.pdf",
+    "CIVL6415 Week 4 Notes.docx",
+    "Computer Exercise 1.pdf",
+    "Lecture 2.pdf",
+    "Lecture 4.pdf",
+    "Textbook - Highway Traffic Analysis and Design (Part I).pdf",
+    "Textbook - Highway Traffic Analysis and Design (Part II).pdf",
+    "Tutorial Week 2-4.pdf"
   ]
 }
