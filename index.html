@@ -28,6 +28,7 @@
           <li><a href="#" data-subject="CIVL6415">CIVL6415</a></li>
           <li><a href="#" data-subject="MATH3301">MATH3301</a></li>
           <li><a href="#" data-subject="MATH3405">MATH3405</a></li>
+          <li><a href="#" data-subject="CIVL4333">CIVL4333</a></li>
         </ul>
         <div class="toggle-wrap">
           <button id="toggle-dark" class="btn">🌙 Toggle Dark Mode</button>
@@ -36,7 +37,7 @@
 
       <div class="content">
         <h1>Welcome to My Uni Notes</h1>
-        <p id="intro">Semester 2, 2025 notes. Use the sidebar to switch subjects, search below to filter files.</p>
+        <p id="intro">Use the sidebar to switch subjects, search below to filter files.</p>
         <h2 id="course-title"></h2>
         <input type="text" id="search" placeholder="Search files... (filters filenames)">
         <div id="pdfs" class="group"></div>
@@ -46,12 +47,13 @@
 
   <script>
     const PJSON_URL = "files.json";
-    const SUBJECTS = ["CIVL4518", "CIVL6415", "MATH3301", "MATH3405"];
+    const SUBJECTS = ["CIVL4518", "CIVL6415", "MATH3301", "MATH3405","CIVL4333"];
     const SUBJECT_TITLES = {
       "CIVL4518": "CIVL4518 Integrated Design for the Built Environment",
       "CIVL6415": "CIVL6415 Traffic Analysis and Simulation",
       "MATH3301": "MATH3301 Graph Theory & Design Theory",
-      "MATH3405": "MATH3405 Differential Geometry"
+      "MATH3405": "MATH3405 Differential Geometry",
+      "CIVL4333": "Advanced Concrete"
     };
 
     function getFileIcon(ext) {
