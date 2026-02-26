@@ -3,10 +3,10 @@ name: Update Files JSON
 on:
   push:
     branches: [ main ]
-    paths:
-      - 'files/**'                      # run when files are added/removed
-      - 'update_files.py'              # or the generator script changes
-      - '.github/workflows/update-files.yml'
+#    paths:
+#      - 'files/**'                      # run when files are added/removed
+#      - 'update_files.py'              # or the generator script changes
+#      - '.github/workflows/update-files.yml'
   schedule:
     - cron: '23 03 * * *'              # daily at 03:23 UTC
   workflow_dispatch:                   # allow manual run from Actions tab
