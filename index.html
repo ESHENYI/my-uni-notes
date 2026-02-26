@@ -24,10 +24,10 @@
         <h2>Subjects</h2>
         <ul id="subject-list">
           <li><a href="#" data-subject="ALL" class="active">All Files</a></li>
-          <li><a href="#" data-subject="CIVL4518">CIVL4518</a></li>
-          <li><a href="#" data-subject="CIVL6415">CIVL6415</a></li>
-          <li><a href="#" data-subject="MATH3301">MATH3301</a></li>
-          <li><a href="#" data-subject="MATH3405">MATH3405</a></li>
+          <li><a href="#" data-subject="MATH3302">MATH3302</a></li>
+          <li><a href="#" data-subject="MATH3303">MATH3303</a></li>
+          <li><a href="#" data-subject="CIVL6410">CIVL6410</a></li>
+          <li><a href="#" data-subject="CIVL4340">CIVL4340</a></li>
           <li><a href="#" data-subject="CIVL4333">CIVL4333</a></li>
         </ul>
         <div class="toggle-wrap">
@@ -47,13 +47,13 @@
 
   <script>
     const PJSON_URL = "files.json";
-    const SUBJECTS = ["CIVL4518", "CIVL6415", "MATH3301", "MATH3405","CIVL4333"];
+    const SUBJECTS = ["MATH3302", "MATH3303", "CIVL6410", "CIVL4340","CIVL4333"];
     const SUBJECT_TITLES = {
-      "CIVL4518": "CIVL4518 Integrated Design for the Built Environment",
-      "CIVL6415": "CIVL6415 Traffic Analysis and Simulation",
-      "MATH3301": "MATH3301 Graph Theory & Design Theory",
-      "MATH3405": "MATH3405 Differential Geometry",
-      "CIVL4333": "Advanced Concrete"
+      "MATH3302": "MATH3302 Coding & Cryptography",
+      "MATH3303": "MATH3303 Abstract Algebra & Number Theory",
+      "CIVL6410": "CIVL6410 Transport Network Modelling",
+      "CIVL4340": "CIVL4340 Wind Engineering",
+      "CIVL4333": "Advanced Concrete Design"
     };
 
     function getFileIcon(ext) {
