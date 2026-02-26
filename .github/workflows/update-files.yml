@@ -3,13 +3,9 @@ name: Update Files JSON
 on:
   push:
     branches: [ main ]
-#    paths:
-#      - 'files/**'                      # run when files are added/removed
-#      - 'update_files.py'              # or the generator script changes
-#      - '.github/workflows/update-files.yml'
   schedule:
-    - cron: '23 03 * * *'              # daily at 03:23 UTC
-  workflow_dispatch:                   # allow manual run from Actions tab
+    - cron: '23 03 * * *'
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -40,23 +36,52 @@ jobs:
           git checkout main
           git pull --rebase origin main
 
+      # ✅ Detect if anything inside files/ changed
+      - name: Check if files folder changed
+        id: files_changed
+        run: |
+          echo "Checking for changes in files/..."
+
+          # Handle first commit safely
+          if [ "${{ github.event.before }}" = "0000000000000000000000000000000000000000" ]; then
+            echo "First commit detected — running generator."
+            echo "changed=true" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+
+          if git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep '^files/'; then
+            echo "Changes detected in files/."
+            echo "changed=true" >> $GITHUB_OUTPUT
+          else
+            echo "No changes in files/."
+            echo "changed=false" >> $GITHUB_OUTPUT
+          fi
+
+      # ✅ Only run generator if files changed
       - name: Run the generator
+        if: steps.files_changed.outputs.changed == 'true'
         run: python update_files.py
 
+      # Optional debug output
       - name: Show generated files.json (for debugging)
+        if: steps.files_changed.outputs.changed == 'true'
         run: |
           echo "====== files.json ======"
           cat files.json || true
           echo "========================"
 
+      # ✅ Only commit if files changed AND files.json changed
       - name: Commit and push if files.json changed
+        if: steps.files_changed.outputs.changed == 'true'
         run: |
           if git diff --quiet -- files.json; then
-            echo "No changes to files.json. Exiting."
+            echo "files.json unchanged. Exiting."
             exit 0
           fi
+
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
           git add files.json
           git commit -m "Auto-update files.json [skip ci]" || exit 0
           (git push origin main) || (git pull --rebase origin main && git push origin main)
