@@ -1,13 +1,19 @@
 {
-  "MATH3302": [
-  ],
-  "MATH3303": [
+  "CIVL4333": [
+    "readme.txt"
   ],
   "CIVL6410": [
-    "CIVL6410_Lecure_1.pdf"
+    "CIVL6410_Lecure_1.pdf",
+    "Textbook - Urban Transportation analysis.pdf",
+    "readme.txt"
+  ],
+  "MATH3302": [
+    "readme.txt"
   ],
   "CIVL4340": [
+    "readme.txt"
   ],
-  "CIVL4333": [
+  "MATH3303": [
+    "readme.txt"
   ]
 }
