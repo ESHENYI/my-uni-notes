@@ -112,9 +112,9 @@
       });
 
     /* -------------------------
-       CIVL6415 extra links box
+       MATH3303 extra links box
        ------------------------- */
-    function buildCIVL6415Extras() {
+    function buildMATH3303Extras() {
       // container
       const extras = document.createElement("div");
       extras.style.marginTop = "16px";
@@ -218,9 +218,9 @@
           }
           wrap.appendChild(list);
 
-          // ⬇️ Add CIVL6415 extras ONLY for that subject
-          if (subject === "CIVL6415") {
-            wrap.appendChild(buildCIVL6415Extras());
+          // ⬇️ Add MATH3303 extras ONLY for that subject
+          if (subject === "MATH3303") {
+            wrap.appendChild(buildMATH3303Extras());
           }
 
           pdfContainer.appendChild(wrap);
