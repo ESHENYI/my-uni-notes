@@ -1,14 +1,4 @@
 {
-  "CIVL4333": [
-    "CIVL4333_Assignment_1.pdf",
-    "Week_1_Lecture.pdf",
-    "Week_1_Problems.pdf",
-    "Week_1_Problems_Solution.pdf",
-    "Week_2_Lecture.pdf",
-    "Week_2_Problems.pdf",
-    "Week_2_Problems_Solutions.pdf",
-    "readme.txt"
-  ],
   "CIVL6410": [
     "CIVL6410_Lecture_1.pdf",
     "CIVL6410_Lecture_3.pdf",
@@ -24,15 +14,23 @@
     "readme.txt",
     "spyder_basics.pdf"
   ],
-  "MATH3302": [
-    "Cryptography Practical 1.pdf",
-    "MATH3302 - Crypto 4 - Stream Ciphers.pdf",
-    "MATH3302 Formula sheet.pdf",
-    "MATH3302_Assignment_1.pdf",
+  "CIVL4340": [
+    "CIVL4340_Lecture_1.pdf",
+    "CIVL4340_Lecture_2.pdf",
+    "CIVL4340_Lecture_3.pdf",
+    "CIVL4340_Lecture_4.pdf",
+    "CIVL4340_Lecture_5.pdf",
+    "CIVL4340_Tutorial_Week 1.pdf",
     "readme.txt"
   ],
-  "CIVL4340": [
-    "CIVL4340_Tutorial_Week 1.pdf",
+  "CIVL4333": [
+    "CIVL4333_Assignment_1.pdf",
+    "Week_1_Lecture.pdf",
+    "Week_1_Problems.pdf",
+    "Week_1_Problems_Solution.pdf",
+    "Week_2_Lecture.pdf",
+    "Week_2_Problems.pdf",
+    "Week_2_Problems_Solutions.pdf",
     "readme.txt"
   ],
   "MATH3303": [
@@ -40,6 +38,13 @@
     "MATH2301 Notes.pdf",
     "MATH3303 - Problem sheet Week 2.pdf",
     "Textbook - Abstract algebra - an introductory course.pdf",
+    "readme.txt"
+  ],
+  "MATH3302": [
+    "Cryptography Practical 1.pdf",
+    "MATH3302 - Crypto 4 - Stream Ciphers.pdf",
+    "MATH3302 Formula sheet.pdf",
+    "MATH3302_Assignment_1.pdf",
     "readme.txt"
   ]
 }
