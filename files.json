@@ -17,14 +17,11 @@
     "w5_sol_functions.pdf",
     "w5_sol_main.pdf"
   ],
-  "CIVL4340": [
-    "CIVL4340_Assignment_1_2026.pdf",
-    "CIVL4340_Lecture_1.pdf",
-    "CIVL4340_Lecture_2.pdf",
-    "CIVL4340_Lecture_3.pdf",
-    "CIVL4340_Lecture_4.pdf",
-    "CIVL4340_Lecture_5.pdf",
-    "CIVL4340_Tutorial_Week 1.pdf",
+  "MATH3303": [
+    "Assignment 1.pdf",
+    "MATH2301 Notes.pdf",
+    "MATH3303 - Problem sheet Week 2.pdf",
+    "Textbook - Abstract algebra - an introductory course.pdf",
     "readme.txt"
   ],
   "CIVL4333": [
@@ -51,16 +48,20 @@
     "Week_6_Problems_Solutions.pdf",
     "readme.txt"
   ],
-  "MATH3303": [
-    "Assignment 1.pdf",
-    "MATH2301 Notes.pdf",
-    "MATH3303 - Problem sheet Week 2.pdf",
-    "Textbook - Abstract algebra - an introductory course.pdf",
+  "CIVL4340": [
+    "CIVL4340_Assignment_1_2026.pdf",
+    "CIVL4340_Lecture_1.pdf",
+    "CIVL4340_Lecture_2.pdf",
+    "CIVL4340_Lecture_3.pdf",
+    "CIVL4340_Lecture_4.pdf",
+    "CIVL4340_Lecture_5.pdf",
+    "CIVL4340_Tutorial_Week 1.pdf",
     "readme.txt"
   ],
   "MATH3302": [
     "Cryptography Practical 1.pdf",
     "MATH3302 - Crypto 4 - Stream Ciphers.pdf",
+    "MATH3302 - Crypto 5 - Modern standards.pdf",
     "MATH3302 Formula sheet.pdf",
     "MATH3302_Assignment_1.pdf",
     "readme.txt"
