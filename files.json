@@ -1,4 +1,14 @@
 {
+  "MATH3303": [
+    "Assignment 1.pdf",
+    "MATH2301 Notes.pdf",
+    "MATH3303 - Problem sheet Week 2.pdf",
+    "MATH3303 Lecture 19.pdf",
+    "MATH3303 Lecture 20.pdf",
+    "MATH3303 Lecture 21.pdf",
+    "Textbook - Abstract algebra - an introductory course.pdf",
+    "readme.txt"
+  ],
   "CIVL6410": [
     "CIVL6410_Assignment_1.pdf",
     "CIVL6410_Lecture_1.pdf",
@@ -19,16 +29,6 @@
     "w5_sol_main.pdf",
     "wk6_sol_functions.pdf",
     "wk6_sol_main.pdf"
-  ],
-  "MATH3303": [
-    "Assignment 1.pdf",
-    "MATH2301 Notes.pdf",
-    "MATH3303 - Problem sheet Week 2.pdf",
-    "MATH3303 Lecture 19.pdf",
-    "MATH3303 Lecture 20.pdf",
-    "MATH3303 Lecture 21.pdf",
-    "Textbook - Abstract algebra - an introductory course.pdf",
-    "readme.txt"
   ],
   "CIVL4333": [
     "CIVL4333_Assignment 2.pdf",
@@ -60,11 +60,18 @@
   ],
   "CIVL4340": [
     "CIVL4340_Assignment_1_2026.pdf",
+    "CIVL4340_Assignment_2.pdf",
     "CIVL4340_Lecture_1.pdf",
+    "CIVL4340_Lecture_10.pdf",
+    "CIVL4340_Lecture_11_12.pdf",
     "CIVL4340_Lecture_2.pdf",
     "CIVL4340_Lecture_3.pdf",
     "CIVL4340_Lecture_4.pdf",
     "CIVL4340_Lecture_5.pdf",
+    "CIVL4340_Lecture_6.pdf",
+    "CIVL4340_Lecture_7.pdf",
+    "CIVL4340_Lecture_8.pdf",
+    "CIVL4340_Lecture_9.pdf",
     "CIVL4340_Tutorial_Week 1.pdf",
     "readme.txt"
   ],
